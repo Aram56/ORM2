@@ -5,33 +5,32 @@ from django.core.exceptions import ValidationError
 from django.forms import BaseInlineFormSet
 
 
-class ScopeInline(admin.TabularInline):
-    model = Scope
-
-@admin.register(Article)
-class ArticleAdmin(admin.ModelAdmin):
-    inlines = [ScopeInline]
+# class ScopeInline(admin.TabularInline):
+#     model = Scope
 
 class ScopeInlineFormset(BaseInlineFormSet):
     def clean(self):
         count = 0
         for form in self.forms:
-            if form.deleted_forms and self._should_delete_form(form):
+            if self.deleted_forms and self._should_delete_form(form):
                 continue
-            if self.cleaned_data.get('is_main'):
+            if form.cleaned_data.get('is_main'):
                 count += 1
             if count > 1:
-                raise forms.ValidationError('Основной раздел, - может быть только один.')
+                raise ValidationError('Основной раздел, - может быть только один.')
             elif count == 0:
-                raise forms.ValidationError('Укажите основной раздел')    
+                raise ValidationError('Укажите основной раздел')    
             return super().clean()  # вызываем базовый код переопределяемого метода
 
+
 class ScopeInline(admin.TabularInline):
-    model = ScopeInline
+    model = Scope
     formset = ScopeInlineFormset
+
+@admin.register(Article)
+class ArticleAdmin(admin.ModelAdmin):
+    inlines = [ScopeInline, ]
 
 @admin.register(Tag)
 class TagAdmin(admin.ModelAdmin):
-    list_display = ['name']
-
-    
+    list_display = ['name']    
