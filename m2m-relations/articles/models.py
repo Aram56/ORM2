@@ -33,14 +33,3 @@ class Scope(models.Model):
 
 
 
-
-
-
-
-# pass
-    # name = models.Charfield(max_length=200, verbouse_name='Раздел')
-    # # article = models.ManyToManyField(Article, through='Scope')
-    # class Meta:
-    #      ordering = ['-tag_name']
-
-# verbose_name='Раздел'

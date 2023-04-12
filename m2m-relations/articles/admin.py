@@ -5,8 +5,6 @@ from django.core.exceptions import ValidationError
 from django.forms import BaseInlineFormSet
 
 
-# class ScopeInline(admin.TabularInline):
-#     model = Scope
 
 class ScopeInlineFormset(BaseInlineFormSet):
     class Meta:
@@ -22,7 +20,7 @@ class ScopeInlineFormset(BaseInlineFormSet):
             raise ValidationError('Основной раздел, - может быть только один.')
         elif count == 0:
             raise ValidationError('Укажите основной раздел')    
-        return super().clean()  # вызываем базовый код переопределяемого метода
+        return super().clean()  
 
 
 class ScopeInline(admin.TabularInline):
