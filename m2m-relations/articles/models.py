@@ -29,7 +29,7 @@ class Scope(models.Model):
     class Meta:
         verbose_name = 'Тематика статьи'
         verbose_name_plural = 'Тематика Статей'
-        ordering = ['-is_main', 'tag']
+        ordering = ['-is_main', '-tag']
 
 
 

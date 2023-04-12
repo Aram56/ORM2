@@ -9,6 +9,8 @@ from django.forms import BaseInlineFormSet
 #     model = Scope
 
 class ScopeInlineFormset(BaseInlineFormSet):
+    class Meta:
+        ordering = '-tag'
     def clean(self):
         count = 0
         for form in self.forms:
@@ -16,11 +18,11 @@ class ScopeInlineFormset(BaseInlineFormSet):
                 continue
             if form.cleaned_data.get('is_main'):
                 count += 1
-            if count > 1:
-                raise ValidationError('Основной раздел, - может быть только один.')
-            elif count == 0:
-                raise ValidationError('Укажите основной раздел')    
-            return super().clean()  # вызываем базовый код переопределяемого метода
+        if count > 1:
+            raise ValidationError('Основной раздел, - может быть только один.')
+        elif count == 0:
+            raise ValidationError('Укажите основной раздел')    
+        return super().clean()  # вызываем базовый код переопределяемого метода
 
 
 class ScopeInline(admin.TabularInline):

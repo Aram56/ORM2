@@ -148,7 +148,7 @@ python manage.py loaddata articles.json
 Запустить отладочный веб-сервер проекта:
 
 ```bash
-python manage.py runserver
+
 ```
 
 Для запуска необходимо переименовать env_example в .env и ввести пароли
